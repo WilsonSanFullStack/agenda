@@ -11,3 +11,10 @@ body {
   padding: 0;
   font-family: 'Victor Mono', monospace;
 }
+
+.screen {
+  max-height: 90%;
+  min-height: 90%;
+  min-width: 90%;
+  max-width: 90%;
+}

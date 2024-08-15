@@ -1,7 +1,7 @@
 const Home = () => {
   return (
-    <div>
-      <h1 className=" text-rose-600">hola soy el home</h1>
+    <div className="text-center items-center p-2 min-h-screen bg-black">
+      <h1 className="text-slate-50 text-3xl">hola soy el home</h1>
       <h1 className="text-red-500">hola soy el home</h1>
 
       <div>
