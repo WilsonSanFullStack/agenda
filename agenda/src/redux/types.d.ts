@@ -2,31 +2,31 @@ import { actionTypes } from "./action";
 import { Action } from "redux";
 
 export interface User {
-  id?: string;
-  firstName: string;
-  lastName: string;
+  nombre: string;
+  id: number;
+  edad: number;
   userName: string;
-  password: string;
-  level: number;
-  nextLevel: number;
-  experience: number;
-  job: number;
-  war: number;
-  store: number;
-  email: string;
-  admin: boolean;
-  ipAddress: string;
+  nacionalidad: string;
+  gustos: string[];
+  fetiches: string[];
+  comentatios: string[];
+  creador: string;
+  fechaRegistro: {
+    _seconds: number
+    _nanoseconds: number
+  };
+  pagina: string;
 }
-export type PostUser = string
+export type getUser = string
 
-export interface actionPostUser extends Action {
-  type: typeof actionTypes.postUser;
-  payload: PostUser;
+export interface actionGetUser extends Action {
+  type: typeof actionTypes.getUser;
+  payload: User;
 }
 export interface initState {
-  postUser: null | string;
+  getUser: null | User;
 }
 
 export interface StoreState {
-  user: typeof PostUser
+  user: typeof getUser
 }

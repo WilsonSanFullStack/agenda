@@ -1,8 +1,9 @@
 import { createStore, compose, applyMiddleware } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import { thunk } from "redux-thunk";
+import  { thunk }  from "redux-thunk";
 import rootReducer, { RootState } from "./reducer/index";
+
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
@@ -12,7 +13,7 @@ declare global {
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistConfig = {
-  key: "powerStruggle",
+  key: "agenda",
   storage,
 };
 

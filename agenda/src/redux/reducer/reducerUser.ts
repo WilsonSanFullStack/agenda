@@ -1,18 +1,18 @@
 import { actionTypes } from "../action";
-import { initState, actionPostUser } from "../types";
+import { initState, actionGetUser } from "../types";
 
 const initialState: initState = {
-  postUser: null,
+  getUser: null,
 };
 export const userReducer = (
   state: initState = initialState,
-  action: actionPostUser
+  action: actionGetUser
 ) => {
   switch (action.type) {
-    case actionTypes.postUser:
+    case actionTypes.getUser:
       return {
         ...state,
-        postUser: action.payload,
+        getUser: action.payload,
       };
     default:
       return state;
