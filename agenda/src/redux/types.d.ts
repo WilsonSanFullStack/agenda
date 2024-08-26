@@ -1,7 +1,7 @@
 import { actionTypes } from "./action";
 import { Action } from "redux";
-
-export interface User {
+import rootReducer from "./reducer";
+export interface Clientes {
   nombre: string;
   id: number;
   edad: number;
@@ -12,21 +12,51 @@ export interface User {
   comentatios: string[];
   creador: string;
   fechaRegistro: {
-    _seconds: number
-    _nanoseconds: number
+    _seconds: number;
+    _nanoseconds: number;
   };
   pagina: string;
 }
-export type getUser = string
+// types for action get clientes
+export type getClientes = string;
 
+export interface actionGetClientes extends Action {
+  type: typeof actionTypes.getClientes;
+  payload: Clientes;
+}
+export interface initStateC {
+  getClientes: Clientes | null;
+}
+// types for action get user
+export interface User {
+  admin: boolean;
+  apellido: string;
+  email: string;
+  id?: number;
+  nombre: string;
+  password: string;
+  registro?: {
+    _seconds: number;
+    _nanoseconds: number;
+  };
+  userName: string;
+}
+
+export type getUser = string;
 export interface actionGetUser extends Action {
-  type: typeof actionTypes.getUser;
+  type: typeof actionTypes.getUser | actionTypes.postUser;
   payload: User;
 }
-export interface initState {
-  getUser: null | User;
+export interface initStateU {
+  getUser: User | null;
+  postUser: string | null;
 }
 
+export type PostUser = string;
+
+// types for storeState 
 export interface StoreState {
-  user: typeof getUser
+  clientes: initStateC;
+  user: initStateU
 }
+

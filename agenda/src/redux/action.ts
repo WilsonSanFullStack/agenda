@@ -1,3 +1,5 @@
 export enum actionTypes {
-  getUser="getUser"
+  getClientes="getClientes",
+  getUser="getUser",
+  postUser="postUser"
 }

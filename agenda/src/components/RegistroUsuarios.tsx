@@ -1,17 +1,7 @@
 import { useState, ChangeEvent } from "react";
-import { postUser } from "../redux/actions/user";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/reducer/index";
-// export {PostUser} from '../redux/types'
 
-const Registro = () => {
-  const dispatch = useDispatch<Dispatch<any>>();
-  const response = useSelector((state: RootState) => state.user.postUser) ?? "";
+const RegistroUsuarios = () => {
   const [showForm, setShowForm] = useState(true);
-  const [showRes, setShowRes] = useState(false);
-  console.log(response)
   const [registro, setRegistro] = useState({
     nombre: "",
     apellido: "",
@@ -62,11 +52,9 @@ const Registro = () => {
   const handlerSubmit = (event: React.FormEvent) => {
     event?.preventDefault();
     setShowForm(false);
-    dispatch(postUser(registro));
     setTimeout(() => {
-      setShowRes(true);
       setShowForm(true);
-    }, 1500);
+    }, 500);
   };
   return (
     <div className=" min-h-screen">
@@ -155,13 +143,8 @@ const Registro = () => {
           </form>
         </div>
       )}
-      {showRes && (
-        <div className="text-green-500 font-bold text-center flex justify-center items-center min-h-screen text-4xl uppercase animate-bounce">
-          {typeof response === "string" ? response : ""}
-        </div>
-      )}
     </div>
   );
 };
 
-export default Registro;
+export default RegistroUsuarios;

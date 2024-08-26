@@ -1,18 +1,54 @@
 import { useSelector } from "react-redux";
-import { getUser } from "../redux/actions/user";
+import { getClientes } from "../redux/actions/clientes";
 import { useDispatch } from "react-redux";
 // import { useEffect } from "react";
 // import { RootState } from "../redux/reducer/index";
 import { Dispatch } from "redux";
-import { StoreState, User } from "../redux/types";
+import { Clientes, User } from "../redux/types";
+import { RootState } from '../redux/reducer/index'
+import { getUser } from "../redux/actions/user";
 
 const Home = () => {
   const dispatch = useDispatch<Dispatch<any>>();
 
-  const user: User = useSelector((state: StoreState) => state.user.getUser);
+  const clientes: Clientes = useSelector((state: RootState) => state.clientes.getClientes) ?? {
+    nombre: '',
+    id: 0,
+    edad: 0,
+    userName: '',
+    nacionalidad: '',
+    gustos: [],
+    fetiches: [],
+    comentatios: [],
+    creador: '',
+    fechaRegistro: {
+      _seconds: 0,
+      _nanoseconds: 0
+    },
+    pagina: ''
+  };
+  const user: User = useSelector((state: RootState) => state.user.getUser) ?? {
+  admin: true,
+  apellido: '',
+  email: '',
+  id: 0,
+  nombre: '',
+  password: '',
+  registro: {
+    _seconds: 0,
+    _nanoseconds: 0,
+  },
+  userName: ''
+  };
 console.log(user)
-const milliseconds = (user?.fechaRegistro?._seconds * 1000) + (user?.fechaRegistro?._nanoseconds / 1000000);
-const date = new Date(milliseconds)
+  const milliseconds =
+  (clientes?.fechaRegistro?._seconds ?? 0) * 1000 +
+  (clientes?.fechaRegistro?._nanoseconds ?? 0) / 1000000;
+  const date = new Date(milliseconds);
+  const millisecondsU =
+  (user?.registro?._seconds ?? 0 )* 1000 +
+  (user?.registro?._nanoseconds ?? 0) / 1000000;
+  const dateU = new Date(millisecondsU);
   return (
     <div className="text-center items-center p-2 min-h-screen ">
       <h1 className="text-slate-50 text-3xl">hola soy el home</h1>
@@ -27,6 +63,14 @@ const date = new Date(milliseconds)
       </div>
       <button
         onClick={() => {
+          dispatch(getClientes());
+        }}
+        className="border-white border-2 p-1"
+      >
+        get cliente
+      </button>
+      <button
+        onClick={() => {
           dispatch(getUser());
         }}
         className="border-white border-2 p-1"
@@ -34,18 +78,52 @@ const date = new Date(milliseconds)
         get user
       </button>
       <div>
-        <p className=" text-white">{user?.id}</p>
-        <p className="text-white">{user?.nombre}</p>
-        <p className="text-white">{user?.userName}</p>
-        <p className=" text-white">{user?.edad}</p>
-        <p className=" text-white">{user?.nacionalidad}</p>
-        <p className=" text-white">{user?.pagina}</p>
-        <section className=" text-white">{user?.comentatios.map((a, x) => { return <p className="text-blue-500" key={x+1} >{a}</p>})}</section>
-        <section className=" text-white">{user?.fetiches.map((a, x) => { return <p className="text-green-500" key={x+1}>{a}</p>})}</section>
-        <section className=" text-white">{user?.gustos.map((a, x) => { return <p className="text-yellow-500" key={x+1}>{a}</p>})}</section>
-        <p className=" text-white">{user?.creador}</p>
+        <p className=" text-white">{clientes?.id}</p>
+        <p className="text-white">{clientes?.nombre}</p>
+        <p className="text-white">{clientes?.userName}</p>
+        <p className=" text-white">{clientes?.edad}</p>
+        <p className=" text-white">{clientes?.nacionalidad}</p>
+        <p className=" text-white">{clientes?.pagina}</p>
+        <section className=" text-white">
+          {clientes?.comentatios?.map((a, x) => {
+            return (
+              <p className="text-blue-500" key={x + 1}>
+                {a}
+              </p>
+            );
+          })}
+        </section>
+        <section className=" text-white">
+          {clientes?.fetiches?.map((a, x) => {
+            return (
+              <p className="text-green-500" key={x + 1}>
+                {a}
+              </p>
+            );
+          })}
+        </section>
+        <section className=" text-white">
+          {clientes?.gustos?.map((a, x) => {
+            return (
+              <p className="text-yellow-500" key={x + 1}>
+                {a}
+              </p>
+            );
+          })}
+        </section>
+        <p className=" text-white">{clientes?.creador}</p>
         {date && <p className=" text-white">{date?.toLocaleString()} UTC-5</p>}
+      </div>
 
+      <div>
+        <p>{user?.id} </p>
+        <p>{user?.nombre} </p>
+        <p>{user?.apellido} </p>
+        <p>{user?.userName} </p>
+        <p>{user?.email} </p>
+        <p>{user?.admin?'es administrador': 'no es administrador'} </p>
+        <p className=" text-white">{clientes?.creador}</p>
+        {date && <p className=" text-white">{dateU?.toLocaleString()} UTC-5</p>}
       </div>
     </div>
   );

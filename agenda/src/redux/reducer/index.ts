@@ -1,11 +1,13 @@
 // src/store/rootReducer.ts
 import { combineReducers } from 'redux';
+import { clientesReducer } from './reducerClientes';
 import { userReducer } from './reducerUser';
-import { StoreState } from '../types';
 
 
 
-const rootReducer = combineReducers<StoreState>({
+
+const rootReducer = combineReducers({
+  clientes: clientesReducer,
   user: userReducer
 });
 
