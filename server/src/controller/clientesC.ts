@@ -1,14 +1,15 @@
-import db from "../../db";
+import db from "../db";
 
 export const getClientes = async () => {
   try {
     const clientes = await db.collection("clientes").get();
-    let res
+    let res;
     clientes.forEach((doc) => {
-      res = doc.data()
+      res = doc.data();
     });
-    return res
+    return res;
   } catch (error) {
-    console.log("error");
+    // error del servidor
+    return { error: `Error en el servidor ${error}` };
   }
 };

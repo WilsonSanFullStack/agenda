@@ -1,11 +1,15 @@
 import { Router, Request, Response } from "express";
 const router = Router();
-import { getClientes } from "../controller/clientes";
+import { getClientes } from "../controller/clientesC";
 
 router.get("/", async (req: Request, res: Response) => {
-  const clientes = await getClientes()
-  console.log(clientes)
+  try {
+    const clientes = await getClientes()
   res.status(200).json(clientes);
+  } catch (error) {
+    
+  }
+  
 });
 
 export default router;

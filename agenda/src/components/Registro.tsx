@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer/index";
+import { Link } from "react-router-dom";
 // export {PostUser} from '../redux/types'
 
 const Registro = () => {
@@ -11,7 +12,6 @@ const Registro = () => {
   const response = useSelector((state: RootState) => state.user.postUser) ?? "";
   const [showForm, setShowForm] = useState(true);
   const [showRes, setShowRes] = useState(false);
-  console.log(response)
   const [registro, setRegistro] = useState({
     nombre: "",
     apellido: "",
@@ -143,13 +143,21 @@ const Registro = () => {
                 />
               </section>
 
-              <section className="flex justify-center items-center m-1">
-                <button
-                  type="submit"
-                  className="border-2 p-1 rounded-xl text-green-500 bg-slate-500 border-slate-300 font-bold uppercase"
-                >
-                  enviar
-                </button>
+              <section className="flex justify-center items-center">
+                <section className=" flex justify-center items-center m-1 font-bold uppercase">
+                  <Link to={"/sesion"}>
+                    <button className="border-2 rounded-xl p-1 active:bg-stone-500 hover:bg-blue-500 focus:bg-red-500">
+                      Iniciar Sesion
+                    </button>
+                  </Link>
+                </section>
+                <section className=" m-1 font-bold uppercase">
+                  <Link to={"/"}>
+                    <button className="border-2 rounded-xl p-1 active:bg-stone-500 hover:bg-blue-500 focus:bg-red-500">
+                      Cancelar
+                    </button>
+                  </Link>
+                </section>
               </section>
             </div>
           </form>

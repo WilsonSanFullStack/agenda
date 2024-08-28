@@ -1,7 +1,7 @@
 import server from "./src/server";
-import db from "./db";
+import db from "./src/db";
 const PORT = 3001;
-db
+db;
 server.listen(PORT, function () {
   console.log(`Server is listening on port ${PORT}!`);
 });

@@ -11,7 +11,7 @@ import {
   Filter,
 } from "firebase-admin/firestore";
 
-import serviceAccount from "./firebase/clientespaginas-96d3d-8597c25fc006.json";
+import serviceAccount from "../firebase/clientespaginas-96d3d-8597c25fc006.json";
 
 const DB = initializeApp({
   credential: cert(serviceAccount as ServiceAccount),

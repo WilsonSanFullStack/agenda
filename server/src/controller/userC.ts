@@ -1,14 +1,14 @@
-import db from "../../db";
+import db from "../db";
 import bcrypt from "bcryptjs";
 
 export const getUser = async () => {
   try {
     const user = await db.collection("usuarios").get();
-    let res
+    let res;
     user.forEach((doc) => {
-      res = doc.data()
+      res = doc.data();
     });
-    return res
+    return res;
   } catch (error) {
     console.log("error");
   }
@@ -36,8 +36,8 @@ export const postUser = async (user: User) => {
       user.admin = true;
     }
     // verifica si un usuario ya existe con ese correo retorna error en caso contrario continua la funcion
-    const userDocRef =  db.collection('usuarios').doc(`${user.userName}`)
-    const verifyUser = await userDocRef.get()
+    const userDocRef = db.collection("usuarios").doc(`${user.userName}`);
+    const verifyUser = await userDocRef.get();
     if (verifyUser.exists) {
       return { error: "El Nick ya esta registrado" };
     } else {
@@ -61,23 +61,22 @@ export const postUser = async (user: User) => {
         // cambiamos el valor de la contraseña por el hashed
         user.password = hashedPassword;
       }
-      console.log('first')
-    const response = db.collection('usuarios').doc(`${user.userName}`)
-    await response.set({
-      admin: user.admin,
-      apellido: user.apellido,
-      email: user.email,
-      nombre: user.nombre,
-      password: user.password,
-      userName: user.userName
-    })
-    console.log('response', response)
-    if (response) {
-      const respon = 'usuario creado'
-      return respon
+      const response = db.collection("usuarios").doc(`${user.userName}`);
+      await response.set({
+        admin: user.admin,
+        apellido: user.apellido,
+        email: user.email,
+        nombre: user.nombre,
+        password: user.password,
+        userName: user.userName,
+      });
+      if (response) {
+        const respon = "usuario creado";
+        return respon;
+      }
     }
-  }
   } catch (error) {
-    console.log(error)
+    // error del servidor
+    return { error: `Error en el servidor ${error}` };
   }
-}
+};
