@@ -10,7 +10,7 @@ router.post("/", async (req: Request, res: Response) => {
       return res.status(404).json(token.message)
     } else {
     res.cookie("accessToken", token, {httpOnly: true, secure: true})
-    return res.status(200).json({success: true})
+    return res.status(200).json('Credenciales Correctas')
     }
   } catch (error) {
     return res.status(500).json(error)

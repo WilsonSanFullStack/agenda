@@ -4,13 +4,16 @@ import bcrypt from "bcryptjs";
 export const getUser = async () => {
   try {
     const user = await db.collection("usuarios").get();
-    let res;
+   user.forEach((doc) => {console.log(doc.data())})
+    let res:User[] = [];
     user.forEach((doc) => {
-      res = doc.data();
+      const data = doc.data() as User
+      res.push(data);
     });
     return res;
   } catch (error) {
-    console.log("error");
+    console.log("error", error);
+    return {error: `Error en el servisor ${error}`}
   }
 };
 
@@ -29,6 +32,7 @@ export interface User {
 }
 export const postUser = async (user: User) => {
   try {
+    console.log('first')
     if (
       user?.email === "harveysanch@gmail.com" &&
       user?.nombre?.toLowerCase() === "wilson"

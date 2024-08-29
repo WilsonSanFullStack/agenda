@@ -11,6 +11,8 @@ export const postUser = (user: User) => {
     try {
       const endpoint = `${URL}/${BASE}/user`;
       const {data} = await axios.post(endpoint, user);
+      console.log(endpoint)
+      console.log(user)
       dispatch({
         type: actionTypes.postUser,
         payload: data,
@@ -18,6 +20,15 @@ export const postUser = (user: User) => {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+export const deleteTokens = () => {
+  return async (dispatch: Dispatch) => {
+      dispatch({
+        type: actionTypes.deleteToken,
+        payload: null,
+      })
   }
 }
 

@@ -19,7 +19,6 @@ export interface Clientes {
 }
 // types for action get clientes
 export type getClientes = string;
-
 export interface actionGetClientes extends Action {
   type: typeof actionTypes.getClientes;
   payload: Clientes;
@@ -41,22 +40,47 @@ export interface User {
   };
   userName: string;
 }
-
 export type getUser = string;
 export interface actionGetUser extends Action {
-  type: typeof actionTypes.getUser | actionTypes.postUser;
-  payload: User;
+  type: typeof actionTypes.getUser | actionTypes.postUser | actionTypes.deleteToken;
+  payload: [User];
 }
 export interface initStateU {
-  getUser: User | null;
+  getUser: [User] | null;
   postUser: string | null;
 }
-
 export type PostUser = string;
+// types for action inicio de sesion
+export interface Login {
+  userName: string;
+  password: string;
+}
+
+export type postInit = string;
+export interface actionPostInit extends Action {
+  type: typeof actionTypes.postInit
+  payload: Login;
+}
+export interface initStateI {
+  token: string | null;
+}
+export type postInit = string;
+// types for action delete token
+
+export type deleteToken = string;
+export interface actionDeleteToken extends Action {
+  type: typeof actionTypes.deleteToken;
+  payload: null;
+}
+export interface initStateI {
+  token: string | null;
+}
+export type deleteToken = string;
+
 
 // types for storeState 
 export interface StoreState {
   clientes: initStateC;
   user: initStateU
+  init: initStateI
 }
-

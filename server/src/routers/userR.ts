@@ -5,11 +5,20 @@ import { getUser, postUser } from "../controller/userC";
 router.post("/", async (req: Request, res: Response) => {
   try {
     const user = req.body;
-    if (user.nombre && user.apellido && user.userName && user.password && user.admin &&  user.email) { 
+    console.log(user);
+    if (
+      user.nombre &&
+      user.apellido &&
+      user.userName &&
+      user.email &&
+      user.password &&
+      user.confirmarPassword
+    ) {
+      console.log('me ejecuto')
       const response = await postUser(user);
       res.status(200).json(response);
     } else {
-      res.status(404).json({error: 'Error datos insuficientes'})
+      res.status(404).json({ error: "Error datos insuficientes" });
     }
   } catch (error) {
     return res.status(500).json(error);
@@ -21,7 +30,7 @@ router.get("/", async (req: Request, res: Response) => {
     const user = await getUser();
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
 });
 

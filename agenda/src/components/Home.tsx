@@ -1,56 +1,57 @@
 import { useSelector } from "react-redux";
 import { getClientes } from "../redux/actions/clientes";
 import { useDispatch } from "react-redux";
-// import { useEffect } from "react";
-// import { RootState } from "../redux/reducer/index";
 import { Dispatch } from "redux";
 import { Clientes, User } from "../redux/types";
-import { RootState } from '../redux/reducer/index'
+import { RootState } from "../redux/reducer/index";
 import { getUser } from "../redux/actions/user";
 
 const Home = () => {
   const dispatch = useDispatch<Dispatch<any>>();
 
-  const clientes: Clientes = useSelector((state: RootState) => state.clientes.getClientes) ?? {
-    nombre: '',
+  const clientes: Clientes = useSelector(
+    (state: RootState) => state.clientes.getClientes
+  ) ?? {
+    nombre: "",
     id: 0,
     edad: 0,
-    userName: '',
-    nacionalidad: '',
+    userName: "",
+    nacionalidad: "",
     gustos: [],
     fetiches: [],
     comentatios: [],
-    creador: '',
+    creador: "",
     fechaRegistro: {
       _seconds: 0,
-      _nanoseconds: 0
+      _nanoseconds: 0,
     },
-    pagina: ''
+    pagina: "",
   };
-  const user: User = useSelector((state: RootState) => state.user.getUser) ?? {
-  admin: true,
-  apellido: '',
-  email: '',
-  id: 0,
-  nombre: '',
-  password: '',
-  registro: {
-    _seconds: 0,
-    _nanoseconds: 0,
-  },
-  userName: ''
-  };
-console.log(user)
+  const user: [User] = useSelector(
+    (state: RootState) => state.user.getUser
+  ) ?? [
+    {
+      admin: true,
+      apellido: "",
+      email: "",
+      id: 0,
+      nombre: "",
+      password: "",
+      registro: {
+        _seconds: 0,
+        _nanoseconds: 0,
+      },
+      userName: "",
+    },
+  ];
+  console.log(user);
   const milliseconds =
-  (clientes?.fechaRegistro?._seconds ?? 0) * 1000 +
-  (clientes?.fechaRegistro?._nanoseconds ?? 0) / 1000000;
+    (clientes?.fechaRegistro?._seconds ?? 0) * 1000 +
+    (clientes?.fechaRegistro?._nanoseconds ?? 0) / 1000000;
   const date = new Date(milliseconds);
-  const millisecondsU =
-  (user?.registro?._seconds ?? 0 )* 1000 +
-  (user?.registro?._nanoseconds ?? 0) / 1000000;
-  const dateU = new Date(millisecondsU);
+  
   return (
-    <div className="text-center items-center p-2 min-h-screen ">
+    <div className="text-center items-center p-2 min-h-screen  pt-12">
       <h1 className="text-slate-50 text-3xl">hola soy el home</h1>
       <h1 className="text-red-500">hola soy el home</h1>
 
@@ -65,7 +66,7 @@ console.log(user)
         onClick={() => {
           dispatch(getClientes());
         }}
-        className="border-white border-2 p-1"
+        className="border-white border-2 p-1 "
       >
         get cliente
       </button>
@@ -116,14 +117,26 @@ console.log(user)
       </div>
 
       <div>
-        <p>{user?.id} </p>
-        <p>{user?.nombre} </p>
-        <p>{user?.apellido} </p>
-        <p>{user?.userName} </p>
-        <p>{user?.email} </p>
-        <p>{user?.admin?'es administrador': 'no es administrador'} </p>
-        <p className=" text-white">{clientes?.creador}</p>
-        {date && <p className=" text-white">{dateU?.toLocaleString()} UTC-5</p>}
+        {user.map((user, x) => {
+          const millisecondsU =
+          (user?.registro?._seconds ?? 0) * 1000 +
+          (user?.registro?._nanoseconds ?? 0) / 1000000;
+        const dateU = new Date(millisecondsU);
+          return (
+            <div key={x+1}>
+              <p>{user?.id} </p>
+              <p>{user?.nombre} </p>
+              <p>{user?.apellido} </p>
+              <p>{user?.userName} </p>
+              <p>{user?.email} </p>
+              <p>{user?.admin ? "es administrador" : "no es administrador"} </p>
+              <p className=" text-white">{clientes?.creador}</p>
+              {date && (
+                <p className=" text-white">{dateU?.toLocaleString()} UTC-5</p>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

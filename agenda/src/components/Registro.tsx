@@ -1,13 +1,13 @@
-import { useState, ChangeEvent } from "react";
-import { postUser } from "../redux/actions/user";
+import { useState, ChangeEvent, useEffect } from "react";
+import { deleteTokens, postUser } from "../redux/actions/user";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer/index";
-import { Link } from "react-router-dom";
-// export {PostUser} from '../redux/types'
+import { Link, useNavigate } from "react-router-dom";
 
 const Registro = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
   const response = useSelector((state: RootState) => state.user.postUser) ?? "";
   const [showForm, setShowForm] = useState(true);
@@ -65,9 +65,19 @@ const Registro = () => {
     dispatch(postUser(registro));
     setTimeout(() => {
       setShowRes(true);
-      setShowForm(true);
-    }, 1500);
+    }, 500);
   };
+  useEffect(() => {
+    setTimeout(() => {
+      if (response === "usuario creado" ) {
+        dispatch(deleteTokens())
+        return navigate("/");
+      } else {
+        setShowForm(true);
+      }
+    }, 2500);
+  }, [response]);
+
   return (
     <div className=" min-h-screen">
       {showForm && (
@@ -145,11 +155,9 @@ const Registro = () => {
 
               <section className="flex justify-center items-center">
                 <section className=" flex justify-center items-center m-1 font-bold uppercase">
-                  <Link to={"/sesion"}>
                     <button className="border-2 rounded-xl p-1 active:bg-stone-500 hover:bg-blue-500 focus:bg-red-500">
-                      Iniciar Sesion
+                      Registrar
                     </button>
-                  </Link>
                 </section>
                 <section className=" m-1 font-bold uppercase">
                   <Link to={"/"}>

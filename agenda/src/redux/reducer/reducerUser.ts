@@ -22,6 +22,12 @@ export const userReducer = (
           postUser: action.payload
         }
 
+      case actionTypes.deleteToken:
+        return {
+          ...state,
+          postUser: action.payload
+        }
+
     default:
       return state;
   }
