@@ -1,8 +1,9 @@
 import { Router, Request, Response } from "express";
 const router = Router();
 import { getUser, postUser } from "../controller/userC";
+import { verifyToken } from "../jwt/jwt";
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", verifyToken,  async (req: Request, res: Response) => {
   try {
     const user = req.body;
     console.log(user);

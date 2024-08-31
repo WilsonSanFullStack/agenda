@@ -6,10 +6,11 @@ import { Dispatch } from "redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer/index";
 
+
 const Sesion = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
-  const token = useSelector((state: RootState) => state.token.token) ?? "";
+  const token = useSelector((state: RootState) => state.token.token)??{message: '', payloap: {}};
   console.log(token);
   const [init, setInit] = useState(false);
   const [login, setLogin] = useState({
@@ -40,10 +41,12 @@ const Sesion = () => {
   };
   useEffect(() => {
     setTimeout(() => {
-      if (token === "Credenciales Correctas") {
-        dispatch(deleteToken());
-        return navigate("/home");
-      } else {
+      if ('message' in token) {
+        if (token.message === 'Credenciales Correctas') {
+          dispatch(deleteToken());
+          return navigate("/home");
+        }
+      } else if (token === null) {
         dispatch(deleteToken());
         setShowForm(true);
         setInit(false);

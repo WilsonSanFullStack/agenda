@@ -5,12 +5,18 @@ import { logging } from "../controller/authC";
 router.post("/", async (req: Request, res: Response) => {
   try {
     const login = req.body;
-    const token = await logging(login);
-    if (token && typeof token !== 'string') {
-      return res.status(404).json(token.message)
+    const response = await logging(login);
+    if ('token' in response) {
+      const {token, payload} = response
+      res.cookie("accessToken", token, {
+      httpOnly: true, // Asegura que la cookie no sea accesible por JavaScript del lado del cliente
+      secure: true, // Solo se envía en HTTPS en producción
+    })
+    return res.status(200).json({message: 'Credenciales Correctas', payload: payload})
+  } else if ('message' in response) {
+    return res.status(404).json(response.message)
     } else {
-    res.cookie("accessToken", token, {httpOnly: true, secure: true})
-    return res.status(200).json('Credenciales Correctas')
+      return res.status(500).json(response.error);
     }
   } catch (error) {
     return res.status(500).json(error)

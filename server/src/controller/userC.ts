@@ -1,5 +1,7 @@
+import { Timestamp } from "firebase-admin/firestore";
 import db from "../db";
 import bcrypt from "bcryptjs";
+
 
 export const getUser = async () => {
   try {
@@ -73,6 +75,7 @@ export const postUser = async (user: User) => {
         nombre: user.nombre,
         password: user.password,
         userName: user.userName,
+        registro: Timestamp.now()
       });
       if (response) {
         const respon = "usuario creado";

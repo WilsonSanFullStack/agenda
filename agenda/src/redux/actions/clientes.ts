@@ -4,11 +4,13 @@ import { actionTypes } from "../action";
 
 const BASE = import.meta.env.VITE_REACT_APP_BASE;
 const URL = import.meta.env.VITE_REACT_APP_URL;
+
+
 export const getClientes = () => {
   return async (dispatch: Dispatch) => {
     try {
       const endpoint = `${URL}/${BASE}/clientes`;
-      const {data} = await axios.get(endpoint);
+      const {data} = await axios.get(endpoint, { withCredentials: true });
       dispatch({
         type: actionTypes.getClientes,
         payload: data,

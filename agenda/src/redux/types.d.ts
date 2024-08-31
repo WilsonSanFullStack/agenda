@@ -21,10 +21,10 @@ export interface Clientes {
 export type getClientes = string;
 export interface actionGetClientes extends Action {
   type: typeof actionTypes.getClientes;
-  payload: Clientes;
+  payload: Clientes [];
 }
 export interface initStateC {
-  getClientes: Clientes | null;
+  getClientes: Clientes[] | null;
 }
 // types for action get user
 export interface User {
@@ -43,10 +43,10 @@ export interface User {
 export type getUser = string;
 export interface actionGetUser extends Action {
   type: typeof actionTypes.getUser | actionTypes.postUser | actionTypes.deleteToken;
-  payload: [User];
+  payload: User[];
 }
 export interface initStateU {
-  getUser: [User] | null;
+  getUser: User[] | null;
   postUser: string | null;
 }
 export type PostUser = string;
@@ -62,7 +62,9 @@ export interface actionPostInit extends Action {
   payload: Login;
 }
 export interface initStateI {
-  token: string | null;
+  token: {message: string,
+        payloap: object
+      }  | null;
 }
 export type postInit = string;
 // types for action delete token
@@ -72,9 +74,11 @@ export interface actionDeleteToken extends Action {
   type: typeof actionTypes.deleteToken;
   payload: null;
 }
-export interface initStateI {
-  token: string | null;
-}
+// export interface initStateI {
+//   token: {message: string,
+//     payloap: object
+//   }  | null;
+// }
 export type deleteToken = string;
 
 

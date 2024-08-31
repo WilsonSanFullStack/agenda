@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from '../redux/actions/initState'
+// import jwt_decode from "jwt-decode";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,6 @@ const NavBar = () => {
             </button>
           </li>
         </Link>
-        <Link to={"/home"}>
           <li className="inline-block items-center">
             <button
               onClick={handleLogout}
@@ -48,7 +48,6 @@ const NavBar = () => {
               cerrar
             </button>
           </li>
-        </Link>
       </ul>
     </nav>
   );

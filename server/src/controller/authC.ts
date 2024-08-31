@@ -6,8 +6,13 @@ import db from "../db";
 import { generateToken } from "../jwt/jwt";
 // creacion de type para login
 type LOGIN = { userName: string; password: string };
+// Definición de tipos para la respuesta de logging
+type LoggingResponse = 
+  | { token: string; payload: object }
+  | { message: string }
+  | { error: string };
 // funcion logging
-export const logging = async (login: LOGIN) => {
+export const logging = async (login: LOGIN): Promise<LoggingResponse> => {
   try {
     // consulta a la db
     const userDocRef = db.collection("usuarios").doc(`${login.userName}`);
@@ -37,7 +42,7 @@ export const logging = async (login: LOGIN) => {
         //generamos el token
         const token = generateToken(payload);
         //retornamos el token
-        return token;
+        return {token: token, payload: payload};
       }
     }
   } catch (error) {
