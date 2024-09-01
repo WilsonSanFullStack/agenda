@@ -21,7 +21,7 @@ export interface Clientes {
 export type getClientes = string;
 export interface actionGetClientes extends Action {
   type: typeof actionTypes.getClientes;
-  payload: Clientes [];
+  payload: Clientes[];
 }
 export interface initStateC {
   getClientes: Clientes[] | null;
@@ -42,7 +42,10 @@ export interface User {
 }
 export type getUser = string;
 export interface actionGetUser extends Action {
-  type: typeof actionTypes.getUser | actionTypes.postUser | actionTypes.deleteToken;
+  type:
+    | typeof actionTypes.getUser
+    | actionTypes.postUser
+    | actionTypes.deleteToken;
   payload: User[];
 }
 export interface initStateU {
@@ -55,16 +58,31 @@ export interface Login {
   userName: string;
   password: string;
 }
+export interface Data {
+  message: string;
+  user: {
+    nombre: string;
+    apellido: string;
+    userName: string;
+    email: string;
+    admin: boolean;
+  };
+}
 
 export type postInit = string;
 export interface actionPostInit extends Action {
-  type: typeof actionTypes.postInit
-  payload: Login;
+  type: typeof actionTypes.postInit;
+  payload: Data;
 }
 export interface initStateI {
-  token: {message: string,
-        payloap: object
-      }  | null;
+  token: string | null;
+  user: {
+    nombre: string;
+    apellido: string;
+    userName: string;
+    email: string;
+    admin: boolean;
+  } | null;
 }
 export type postInit = string;
 // types for action delete token
@@ -81,10 +99,42 @@ export interface actionDeleteToken extends Action {
 // }
 export type deleteToken = string;
 
+// types for action errores
+export interface ErrorAxios {
+  status: number;
+  message: string;
+}
 
-// types for storeState 
+export type error = string;
+export interface actionErrorAxios extends Action {
+  type: typeof actionTypes.error | actionTypes.deleteToken;
+  payload: ErrorAxios;
+}
+export interface initStateE {
+  errorAxios: { message: string; status: number } | null;
+}
+export type ErrorAxios = string;
+
+// types for action session
+export interface Logout {
+  message: string;
+}
+
+export type logout = string;
+export interface actionLogout extends Action {
+  type: typeof actionTypes.logout 
+  payload: Logout;
+}
+export interface initStateL {
+  logout: string | null;
+}
+export type Logout = string;
+
+// types for storeState
 export interface StoreState {
   clientes: initStateC;
-  user: initStateU
-  init: initStateI
+  user: initStateU;
+  init: initStateI;
+  errorAxios: initStateE;
+  logout: initStateL
 }

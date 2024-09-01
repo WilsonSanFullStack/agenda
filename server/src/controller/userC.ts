@@ -2,20 +2,20 @@ import { Timestamp } from "firebase-admin/firestore";
 import db from "../db";
 import bcrypt from "bcryptjs";
 
-
 export const getUser = async () => {
   try {
     const user = await db.collection("usuarios").get();
-   user.forEach((doc) => {console.log(doc.data())})
-    let res:User[] = [];
     user.forEach((doc) => {
-      const data = doc.data() as User
+    });
+    let res: User[] = [];
+    user.forEach((doc) => {
+      const data = doc.data() as User;
       res.push(data);
     });
     return res;
   } catch (error) {
     console.log("error", error);
-    return {error: `Error en el servisor ${error}`}
+    return { error: `Error en el servisor ${error}` };
   }
 };
 
@@ -34,7 +34,7 @@ export interface User {
 }
 export const postUser = async (user: User) => {
   try {
-    console.log('first')
+    console.log("first");
     if (
       user?.email === "harveysanch@gmail.com" &&
       user?.nombre?.toLowerCase() === "wilson"
@@ -75,7 +75,7 @@ export const postUser = async (user: User) => {
         nombre: user.nombre,
         password: user.password,
         userName: user.userName,
-        registro: Timestamp.now()
+        registro: Timestamp.now(),
       });
       if (response) {
         const respon = "usuario creado";

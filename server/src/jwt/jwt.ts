@@ -9,28 +9,38 @@ const secretKey = process.env.SECRETKEY;
 
 export const generateToken = (payload: object): string => {
   // Signs the payload with the secret key and returns the generated token
-  return jwt.sign(payload, secretKey!, { expiresIn: "1h" });
+  return jwt.sign(payload, secretKey!, { expiresIn: "12h" });
 };
 
 export const verifyToken = (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<any> => {
-  const token = req.cookies.accessToken;
-  return new Promise((resolve, reject) => {
-    jwt.verify(
-      token,
-      secretKey!,
-      { complete: true },
-      (err: VerifyErrors | null, decoded: object | undefined) => {
-        if (err) {
-          reject(new Error("Invalid token")); // Rechazar el token inválido con un error
-        } else {
-          resolve(decoded); // Resolver la promesa con los datos decodificados
-          next()
+) => {
+  try {
+    const token = req.cookies.jwt;
+    if (!token) {
+      return res.status(401).json({ message: "Token no proporcionado" });
+    }
+    return new Promise((resolve, reject) => {
+      jwt.verify(
+        token,
+        secretKey!,
+        { complete: true },
+        (err: VerifyErrors | null, decoded: object | undefined) => {
+          if (err) {
+            if (err.name === "TokenExpiredError") {
+              return res.status(401).json({ message: "Token ha expirado" });
+            }
+            return res.status(403).json({ message: "Token inválido" });
+          } else {
+            resolve(decoded); // Resolver la promesa con los datos decodificados
+            next();
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  } catch (error) {
+    return res.status(403).json({ message: "Token inválido o expirado" });
+  }
 };

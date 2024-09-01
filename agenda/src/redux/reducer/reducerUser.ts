@@ -3,7 +3,7 @@ import { initStateU,  actionGetUser } from "../types";
 
 const initialState: initStateU = {
   getUser: null,
-  postUser: '',
+  postUser: null,
 };
 export const userReducer = (
   state: initStateU = initialState,

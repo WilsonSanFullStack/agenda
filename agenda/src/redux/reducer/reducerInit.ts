@@ -3,6 +3,7 @@ import { initStateI,  actionPostInit, actionDeleteToken } from "../types";
 
 const initialState: initStateI = {
   token: null,
+  user: null
 };
 export const initReducer = (
   state: initStateI = initialState,
@@ -12,8 +13,9 @@ export const initReducer = (
     case actionTypes.postInit:
       return {
         ...state,
-        token: action.payload,
-      };
+        token: action.payload.message,
+        user: action.payload.user
+      }
 
     case actionTypes.deleteToken:
       return {

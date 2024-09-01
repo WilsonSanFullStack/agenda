@@ -6,12 +6,14 @@ import { Dispatch } from "redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer/index";
 
-
 const Sesion = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
-  const token = useSelector((state: RootState) => state.token.token)??{message: '', payloap: {}};
-  console.log(token);
+  const token = useSelector((state: RootState) => state.token.token);
+  const errorAxios = useSelector(
+    (state: RootState) => state.errorAxios.errorAxios
+  );
+
   const [init, setInit] = useState(false);
   const [login, setLogin] = useState({
     userName: "",
@@ -41,22 +43,41 @@ const Sesion = () => {
   };
   useEffect(() => {
     setTimeout(() => {
-      if ('message' in token) {
-        if (token.message === 'Credenciales Correctas') {
+      if (token) {
+        if (token === "Credenciales Correctas") {
           dispatch(deleteToken());
           return navigate("/home");
         }
-      } else if (token === null) {
-        dispatch(deleteToken());
+      } else if (errorAxios?.message && errorAxios.status) {
         setShowForm(true);
         setInit(false);
       }
     }, 1000);
-  }, [token, init]);
+  }, [token, init, errorAxios]);
   return (
     <div className="min-h-screen flex justify-center items-center">
       {showForm && (
         <div className="">
+          <section>
+            {errorAxios && (
+              <div className="text-center bg-gray-900 m-2 p-2 rounded-lg">
+                <section className="flex">
+                  <p className="mx-2">status</p>
+                  <p className="text-red-500">{errorAxios.status}</p>
+                </section>
+                <section className="flex">
+                  <p className="mx-2">mensaje</p>
+                  <p className="text-red-500 font-bold">{errorAxios.message}</p>
+                </section>
+                <section  className="text-red-600 font-bold">
+                  {errorAxios.message === "Token no proporcionado"  ? 'Esta intentando usar la pagina sin autorizacion': ''}
+                </section>
+                <section className="text-green-500 font-bold">
+                  {errorAxios.message === "Token ha expirado" ? 'Inicie sesion nuevamente por favor': ''}
+                </section>
+              </div>
+            )}
+          </section>
           <form onSubmit={handlerSubmit}>
             <div>
               <section className="flex justify-center items-center m-1 ">

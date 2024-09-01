@@ -3,7 +3,7 @@ const router = Router();
 import { getUser, postUser } from "../controller/userC";
 import { verifyToken } from "../jwt/jwt";
 
-router.post("/", verifyToken,  async (req: Request, res: Response) => {
+router.post("/",  async (req: Request, res: Response) => {
   try {
     const user = req.body;
     console.log(user);
@@ -15,7 +15,6 @@ router.post("/", verifyToken,  async (req: Request, res: Response) => {
       user.password &&
       user.confirmarPassword
     ) {
-      console.log('me ejecuto')
       const response = await postUser(user);
       res.status(200).json(response);
     } else {
@@ -26,7 +25,7 @@ router.post("/", verifyToken,  async (req: Request, res: Response) => {
   }
 });
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", verifyToken, async (req: Request, res: Response) => {
   try {
     const user = await getUser();
     res.status(200).json(user);
